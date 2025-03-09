@@ -27,7 +27,7 @@
 <meta property="og:description" content="题目描述给定一个包含字母和数字的字符串 str，需要输出其中最长的连续数字子串。输入描述: 一个由字母和数字组成的字符串，长度不超过255；字符串保证至少有一个数字字符，并且只有一个最长的数字子串。输出描述: 最长的数字子串。示例:输入：abcd12345ed125ss123058789输出：123058789  解题思路 利用 isdigit() 函数判断字符是否为数字。   使用滑动窗口技巧，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-03-08T15:00:14.000Z">
-<meta property="article:modified_time" content="2025-03-09T15:52:22.802Z">
+<meta property="article:modified_time" content="2025-03-09T15:53:33.852Z">
 <meta property="article:author" content="xiuyi">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          354 字
+          355 字
         
       </span>
     
@@ -307,59 +307,7 @@
 </ol>
 <hr>
 <h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>以下是 C++ 的实现代码：</p>
-<pre><code class="cpp">#include &lt;iostream&gt;
-#include &lt;string&gt;
-
-using namespace std;
-
-// 获取最长数字子串
-string getMaxNumberToArray(const string&amp; src)
-&#123;
-    int n = src.size();
-    int maxLength = 0;       // 最长数字子串的长度
-    int currentLength = 0;   // 当前数字子串的长度
-    int start = 0;           // 当前数字子串的起始位置
-    int maxStart = 0;        // 最长数字子串的起始位置
-
-    for (int i = 0; i &lt; n; i++)
-    &#123;
-        char c = src[i];
-        if (isdigit(c))
-        &#123;
-            if (currentLength == 0)
-            &#123;
-                start = i;
-            &#125;
-            currentLength++;
-        &#125;
-        else
-        &#123;
-            if (currentLength &gt; maxLength)
-            &#123;
-                maxLength = currentLength;
-                maxStart = start;
-            &#125;
-            currentLength = 0;
-        &#125;
-    &#125;
-
-    // 最后再检查一次当前数字子串是否是最长
-    if (currentLength &gt; maxLength)
-    &#123;
-        maxLength = currentLength;
-        maxStart = start;
-    &#125;
-
-    return src.substr(maxStart, maxLength);
-&#125;
-
-int main()
-&#123;
-    string src = &quot;abcd12345ed125ss123058789&quot;;
-    cout &lt;&lt; getMaxNumberToArray(src) &lt;&lt; endl;
-    return 0;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs CPP"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-comment">// 获取最长数字子串</span><br><span class="hljs-function">string <span class="hljs-title">getMaxNumberToArray</span><span class="hljs-params">(<span class="hljs-type">const</span> string&amp; src)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> n = src.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-type">int</span> maxLength = <span class="hljs-number">0</span>;       <span class="hljs-comment">// 最长数字子串的长度</span><br>    <span class="hljs-type">int</span> currentLength = <span class="hljs-number">0</span>;   <span class="hljs-comment">// 当前数字子串的长度</span><br>    <span class="hljs-type">int</span> start = <span class="hljs-number">0</span>;           <span class="hljs-comment">// 当前数字子串的起始位置</span><br>    <span class="hljs-type">int</span> maxStart = <span class="hljs-number">0</span>;        <span class="hljs-comment">// 最长数字子串的起始位置</span><br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>    &#123;<br>        <span class="hljs-type">char</span> c = src[i];<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isdigit</span>(c))<br>        &#123;<br>            <span class="hljs-keyword">if</span> (currentLength == <span class="hljs-number">0</span>)<br>            &#123;<br>                start = i;<br>            &#125;<br>            currentLength++;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-keyword">if</span> (currentLength &gt; maxLength)<br>            &#123;<br>                maxLength = currentLength;<br>                maxStart = start;<br>            &#125;<br>            currentLength = <span class="hljs-number">0</span>;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 最后再检查一次当前数字子串是否是最长</span><br>    <span class="hljs-keyword">if</span> (currentLength &gt; maxLength)<br>    &#123;<br>        maxLength = currentLength;<br>        maxStart = start;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> src.<span class="hljs-built_in">substr</span>(maxStart, maxLength);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string src = <span class="hljs-string">&quot;abcd12345ed125ss123058789&quot;</span>;<br>    cout &lt;&lt; <span class="hljs-built_in">getMaxNumberToArray</span>(src) &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
                 
               </div>
