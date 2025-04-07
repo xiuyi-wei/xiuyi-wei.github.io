@@ -19,15 +19,15 @@
   <meta name="author" content="xiuyi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="CMake + CUDA + Qt 项目常见问题与解决方案汇总本文件总结了项目构建过程中遇到的问题及对应解决方法，适用于使用 CMake 构建包含 CUDA、Qt、多第三方库的大型项目的场景。  1. CMake 报错PS E:\MFPP\1.Code\MyQtProject&gt; cmake –versioncmake : 无法将“cmake”项识别为 cmdlet、函数、脚本文件或可运行程序">
+    <meta name="description" content="CMake + CUDA + Qt 项目常见问题与解决方案汇总本文件总结了项目构建过程中遇到的问题及对应解决方法，适用于使用 CMake 构建包含 CUDA、Qt、多第三方库的大型项目的场景。  1. CMake 报错问题描述： 123456PS E:\MFPP\1.Code\MyQtProject&gt; cmake --versioncmake : 无法将“cmake”项识别为 cmdlet、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2025年4月07日学习概述">
 <meta property="og:url" content="url:https://xiuyi-wei.github.io/2025/04/07/20250407-CMake/index.html">
 <meta property="og:site_name" content="休一">
-<meta property="og:description" content="CMake + CUDA + Qt 项目常见问题与解决方案汇总本文件总结了项目构建过程中遇到的问题及对应解决方法，适用于使用 CMake 构建包含 CUDA、Qt、多第三方库的大型项目的场景。  1. CMake 报错PS E:\MFPP\1.Code\MyQtProject&gt; cmake –versioncmake : 无法将“cmake”项识别为 cmdlet、函数、脚本文件或可运行程序">
+<meta property="og:description" content="CMake + CUDA + Qt 项目常见问题与解决方案汇总本文件总结了项目构建过程中遇到的问题及对应解决方法，适用于使用 CMake 构建包含 CUDA、Qt、多第三方库的大型项目的场景。  1. CMake 报错问题描述： 123456PS E:\MFPP\1.Code\MyQtProject&gt; cmake --versioncmake : 无法将“cmake”项识别为 cmdlet、">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-04-07T12:51:43.000Z">
-<meta property="article:modified_time" content="2025-04-07T14:22:13.458Z">
+<meta property="article:modified_time" content="2025-04-07T14:25:34.302Z">
 <meta property="article:author" content="xiuyi">
 <meta property="article:tag" content="note">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1.3k 字
         
       </span>
     
@@ -300,36 +300,25 @@
                 
                 <h1 id="CMake-CUDA-Qt-项目常见问题与解决方案汇总"><a href="#CMake-CUDA-Qt-项目常见问题与解决方案汇总" class="headerlink" title="CMake + CUDA + Qt 项目常见问题与解决方案汇总"></a>CMake + CUDA + Qt 项目常见问题与解决方案汇总</h1><p>本文件总结了项目构建过程中遇到的问题及对应解决方法，适用于使用 CMake 构建包含 CUDA、Qt、多第三方库的大型项目的场景。</p>
 <hr>
-<h2 id="1-CMake-报错"><a href="#1-CMake-报错" class="headerlink" title="1. CMake 报错"></a>1. CMake 报错</h2><p>PS E:\MFPP\1.Code\MyQtProject&gt; cmake –version<br>cmake : 无法将“cmake”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。<br>所在位置 行:1 字符: 1</p>
-<ul>
-<li>cmake –version</li>
-<li><pre><code class="hljs">  + CategoryInfo          : ObjectNotFound: (cmake:String) [], CommandNotFoundException
-  + FullyQualifiedErrorId : CommandNotFoundException
-**解决方案：**
-</code></pre>
-</li>
-</ul>
+<h2 id="1-CMake-报错"><a href="#1-CMake-报错" class="headerlink" title="1. CMake 报错"></a>1. CMake 报错</h2><p><strong>问题描述：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">PS E:\MFPP\1.Code\MyQtProject&gt; cmake --version<br>cmake : 无法将“cmake”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。<br>所在位置 行:1 字符: 1<br> cmake --version<br> ~~~~~<br>     CategoryInfo          : ObjectNotFound: (cmake:String) [], CommandNotFoundException<br></code></pre></td></tr></table></figure>
+<p><strong>解决方案：</strong></p>
 <ul>
 <li><strong>重新装了一个中间版本（3.14）的cmake</strong></li>
 </ul>
-<h2 id="2-CMake-报错-无法找到所提供的qt-cmake路径"><a href="#2-CMake-报错-无法找到所提供的qt-cmake路径" class="headerlink" title="2. CMake 报错 无法找到所提供的qt.cmake路径"></a>2. CMake 报错 无法找到所提供的qt.cmake路径</h2><ul>
-<li>CMake Error at CMakeLists.txt:19 (find_package):</li>
-<li>By not providing “FindQt5.cmake” in CMAKE_MODULE_PATH this project has</li>
-<li>asked CMake to find a package configuration file provided by “Qt5”, but</li>
-<li>CMake did not find one.</li>
-<li></li>
-<li>Could not find a package configuration file provided by “Qt5” with any of</li>
-<li>the following names:</li>
-<li></li>
-<li>Qt5Config.cmake</li>
-<li>qt5-config.cmake</li>
-<li></li>
-<li>Add the installation prefix of “Qt5” to CMAKE_PREFIX_PATH or set “Qt5_DIR”</li>
-<li>to a directory containing one of the above files.  If “Qt5” provides a</li>
-<li>separate development package or SDK, be sure it has been installed.<br><strong>解决方案：</strong></li>
-</ul>
-<p><code>set(CMAKE_PREFIX_PATH &quot;D:/Qt/5.14.2/msvc2017_64/lib/cmake&quot;)</code><br>请确保：用 正斜杠 &#x2F; 替代反斜杠 \；使用的是 你的 Qt 安装路径；设置这行要在 find_package(Qt5 COMPONENTS …) 之前</p>
-<h2 id="3-CMake-报错-PCL找不到boost库"><a href="#3-CMake-报错-PCL找不到boost库" class="headerlink" title="3. CMake 报错 PCL找不到boost库"></a>3. CMake 报错 PCL找不到boost库</h2><p>发生异常: FATAL_ERROR<br>CMake Error at D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:59 (message):<br>  common is required but boost was not found<br>Call Stack (most recent call first):<br>  D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:364 (pcl_report_not_found)<br>  D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:546 (find_external_library)<br>  CMakeLists.txt:24 (find_package)<br><strong>解决方案：</strong></p>
+<h2 id="2-CMake-报错-无法找到所提供的qt-cmake路径"><a href="#2-CMake-报错-无法找到所提供的qt-cmake路径" class="headerlink" title="2. CMake 报错 无法找到所提供的qt.cmake路径"></a>2. CMake 报错 无法找到所提供的qt.cmake路径</h2><p><strong>问题描述：</strong><br>CMake Error at CMakeLists.txt:19 (find_package):<br>    By not providing “FindQt5.cmake” in CMAKE_MODULE_PATH this project has<br>    asked CMake to find a package configuration file provided by “Qt5”, but<br>    CMake did not find one.</p>
+<pre><code class="hljs">Could not find a package configuration file provided by &quot;Qt5&quot; with any of
+the following names:
+
+    Qt5Config.cmake
+    qt5-config.cmake
+
+Add the installation prefix of &quot;Qt5&quot; to CMAKE_PREFIX_PATH or set &quot;Qt5_DIR&quot;
+to a directory containing one of the above files.  If &quot;Qt5&quot; provides a
+separate development package or SDK, be sure it has been installed.
+</code></pre>
+<p><strong>解决方案：</strong><br><code>set(CMAKE_PREFIX_PATH &quot;D:/Qt/5.14.2/msvc2017_64/lib/cmake&quot;)</code><br>请确保：用 正斜杠 &#x2F; 替代反斜杠 \；使用的是 你的 Qt 安装路径；设置这行要在 find_package(Qt5 COMPONENTS …) 之前</p>
+<h2 id="3-CMake-报错-PCL找不到boost库"><a href="#3-CMake-报错-PCL找不到boost库" class="headerlink" title="3. CMake 报错 PCL找不到boost库"></a>3. CMake 报错 PCL找不到boost库</h2><p><strong>问题描述：</strong><br>发生异常: FATAL_ERROR<br>CMake Error at D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:59 (message):<br>  common is required but boost was not found<br>Call Stack (most recent call first):<br>  D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:364 (pcl_report_not_found)<br>  D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:546 (find_external_library)<br>  CMakeLists.txt:24 (find_package)<br><strong>解决方案：</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Boost <span class="hljs-keyword">for</span> PCL</span><br>set(Boost_INCLUDE_DIR &quot;D:/Environment/PCL 1.11.1/3rdParty/Boost/include/boost-1_74&quot;)<br>set(Boost_LIBRARY_DIR &quot;D:/Environment/PCL 1.11.1/3rdParty/Boost/lib&quot;)<br>set(BOOST_ROOT &quot;D:/Environment/PCL 1.11.1/3rdParty/Boost&quot;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Then PCL</span><br>set(PCL_DIR &quot;D:/Environment/PCL 1.11.1/cmake&quot;)<br>find_package(PCL REQUIRED)<br></code></pre></td></tr></table></figure>
 <h2 id="4-CMake-报错-MSVC-编译器版本不匹配的问题"><a href="#4-CMake-报错-MSVC-编译器版本不匹配的问题" class="headerlink" title="4. CMake 报错 MSVC 编译器版本不匹配的问题"></a>4. CMake 报错 MSVC 编译器版本不匹配的问题</h2><p><strong>问题描述：</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">发生异常: FATAL_ERROR<br>CMake Error at D:/Environment/PCL 1.11.1/3rdParty/Boost/lib/cmake/Boost-1.74.0/BoostConfig.cmake:141 (find_package):<br>  Found package configuration file:<br><br>    D:/Environment/PCL 1.11.1/3rdParty/Boost/lib/cmake/boost_filesystem-1.74.0/boost_filesystem-config.cmake<br><br>  but it set boost_filesystem_FOUND to FALSE so package &quot;boost_filesystem&quot; is<br>  considered to be NOT FOUND.  Reason given by package:<br><br>  No suitable build variant has been found.<br><br>  The following variants have been tried and rejected:<br><br>  * libboost_filesystem-vc142-mt-gd-x64-1_74.lib (vc142, detected vc141, set<br>  Boost_COMPILER to override)<br><br>  * libboost_filesystem-vc142-mt-x64-1_74.lib (vc142, detected vc141, set<br>  Boost_COMPILER to override)<br><br>Call Stack (most recent call first):<br>  D:/Environment/PCL 1.11.1/3rdParty/Boost/lib/cmake/Boost-1.74.0/BoostConfig.cmake:258 (boost_find_component)<br>  E:/Program Files/CMake/share/cmake-4.0/Modules/FindBoost.cmake:609 (find_package)<br>  CMakeLists.txt:27 (find_package)<br></code></pre></td></tr></table></figure>
@@ -341,7 +330,7 @@
 
 <p><strong>解决方案：</strong></p>
 <ul>
-<li>**检查 <strong>&#96;&#96;</strong> 环境变量是否设置正确，并确保其中包含 **&#96;&#96;<strong>。</strong></li>
+<li>检查 <strong>环境变量是否设置正确，并确保其中包含</strong>。</li>
 <li><strong>重新安装 CUDA 工具包，确保版本和 Visual Studio 兼容（如 VS2017 不支持搭配 CUDA 11.7）。</strong></li>
 <li><strong>CUDA重新安装时需要配置Visual Studio编译器</strong></li>
 </ul>
