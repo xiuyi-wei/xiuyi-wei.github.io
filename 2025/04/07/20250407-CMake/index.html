@@ -1,0 +1,906 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xiuyi">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="CMake + CUDA + Qt 项目常见问题与解决方案汇总本文件总结了项目构建过程中遇到的问题及对应解决方法，适用于使用 CMake 构建包含 CUDA、Qt、多第三方库的大型项目的场景。  **1. CMake 报错PS E:\MFPP\1.Code\MyQtProject&gt; cmake –versioncmake : 无法将“cmake”项识别为 cmdlet、函数、脚本文件或可运行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025年4月07日学习概述">
+<meta property="og:url" content="url:https://xiuyi-wei.github.io/2025/04/07/20250407-CMake/index.html">
+<meta property="og:site_name" content="休一">
+<meta property="og:description" content="CMake + CUDA + Qt 项目常见问题与解决方案汇总本文件总结了项目构建过程中遇到的问题及对应解决方法，适用于使用 CMake 构建包含 CUDA、Qt、多第三方库的大型项目的场景。  **1. CMake 报错PS E:\MFPP\1.Code\MyQtProject&gt; cmake –versioncmake : 无法将“cmake”项识别为 cmdlet、函数、脚本文件或可运行">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-07T12:51:43.000Z">
+<meta property="article:modified_time" content="2025-04-07T14:20:19.164Z">
+<meta property="article:author" content="xiuyi">
+<meta property="article:tag" content="note">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2025年4月07日学习概述 - 休一</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"https","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"kkCWie568T3Td8EHuu5ibLPG-gzGzoHsz","app_key":"Cj2bxcHsUs0jiyCNeRaLxJR5","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>休一的Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2025年4月07日学习概述"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-07 20:51" pubdate>
+          2025年4月7日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2025年4月07日学习概述</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="CMake-CUDA-Qt-项目常见问题与解决方案汇总"><a href="#CMake-CUDA-Qt-项目常见问题与解决方案汇总" class="headerlink" title="CMake + CUDA + Qt 项目常见问题与解决方案汇总"></a>CMake + CUDA + Qt 项目常见问题与解决方案汇总</h1><p>本文件总结了项目构建过程中遇到的问题及对应解决方法，适用于使用 CMake 构建包含 CUDA、Qt、多第三方库的大型项目的场景。</p>
+<hr>
+<h2 id="1-CMake-报错"><a href="#1-CMake-报错" class="headerlink" title="**1. CMake 报错"></a>**1. CMake 报错</h2><p>PS E:\MFPP\1.Code\MyQtProject&gt; cmake –version<br>cmake : 无法将“cmake”项识别为 cmdlet、函数、脚本文件或可运行程序的名称。请检查名称的拼写，如果包括路径，请确保路径正确，然后再试一次。<br>所在位置 行:1 字符: 1</p>
+<ul>
+<li>cmake –version</li>
+<li><pre><code class="hljs">  + CategoryInfo          : ObjectNotFound: (cmake:String) [], CommandNotFoundException
+  + FullyQualifiedErrorId : CommandNotFoundException
+**解决方案：**
+</code></pre>
+</li>
+</ul>
+<ul>
+<li><strong>重新装了一个中间版本（3.14）的cmake</strong></li>
+</ul>
+<h2 id="2-CMake-报错-无法找到所提供的qt-cmake路径"><a href="#2-CMake-报错-无法找到所提供的qt-cmake路径" class="headerlink" title="**2. CMake 报错 无法找到所提供的qt.cmake路径"></a>**2. CMake 报错 无法找到所提供的qt.cmake路径</h2><ul>
+<li>CMake Error at CMakeLists.txt:19 (find_package):</li>
+<li>By not providing “FindQt5.cmake” in CMAKE_MODULE_PATH this project has</li>
+<li>asked CMake to find a package configuration file provided by “Qt5”, but</li>
+<li>CMake did not find one.</li>
+<li></li>
+<li>Could not find a package configuration file provided by “Qt5” with any of</li>
+<li>the following names:</li>
+<li></li>
+<li>Qt5Config.cmake</li>
+<li>qt5-config.cmake</li>
+<li></li>
+<li>Add the installation prefix of “Qt5” to CMAKE_PREFIX_PATH or set “Qt5_DIR”</li>
+<li>to a directory containing one of the above files.  If “Qt5” provides a</li>
+<li>separate development package or SDK, be sure it has been installed.<br><strong>解决方案：</strong></li>
+</ul>
+<p><code>set(CMAKE_PREFIX_PATH &quot;D:/Qt/5.14.2/msvc2017_64/lib/cmake&quot;)</code><br>请确保：用 正斜杠 &#x2F; 替代反斜杠 \；使用的是 你的 Qt 安装路径；设置这行要在 find_package(Qt5 COMPONENTS …) 之前</p>
+<h2 id="2-CMake-报错-PCL找不到boost库"><a href="#2-CMake-报错-PCL找不到boost库" class="headerlink" title="**2. CMake 报错 PCL找不到boost库"></a>**2. CMake 报错 PCL找不到boost库</h2><p>发生异常: FATAL_ERROR<br>CMake Error at D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:59 (message):<br>  common is required but boost was not found<br>Call Stack (most recent call first):<br>  D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:364 (pcl_report_not_found)<br>  D:&#x2F;Environment&#x2F;PCL 1.11.1&#x2F;cmake&#x2F;PCLConfig.cmake:546 (find_external_library)<br>  CMakeLists.txt:24 (find_package)<br><strong>解决方案：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">Boost <span class="hljs-keyword">for</span> PCL</span><br>set(Boost_INCLUDE_DIR &quot;D:/Environment/PCL 1.11.1/3rdParty/Boost/include/boost-1_74&quot;)<br>set(Boost_LIBRARY_DIR &quot;D:/Environment/PCL 1.11.1/3rdParty/Boost/lib&quot;)<br>set(BOOST_ROOT &quot;D:/Environment/PCL 1.11.1/3rdParty/Boost&quot;)<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Then PCL</span><br>set(PCL_DIR &quot;D:/Environment/PCL 1.11.1/cmake&quot;)<br>find_package(PCL REQUIRED)<br></code></pre></td></tr></table></figure>
+<h2 id="3-CMake-报错-MSVC-编译器版本不匹配的问题"><a href="#3-CMake-报错-MSVC-编译器版本不匹配的问题" class="headerlink" title="**3. CMake 报错 MSVC 编译器版本不匹配的问题"></a>**3. CMake 报错 MSVC 编译器版本不匹配的问题</h2><p><strong>问题描述：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">发生异常: FATAL_ERROR<br>CMake Error at D:/Environment/PCL 1.11.1/3rdParty/Boost/lib/cmake/Boost-1.74.0/BoostConfig.cmake:141 (find_package):<br>  Found package configuration file:<br><br>    D:/Environment/PCL 1.11.1/3rdParty/Boost/lib/cmake/boost_filesystem-1.74.0/boost_filesystem-config.cmake<br><br>  but it set boost_filesystem_FOUND to FALSE so package &quot;boost_filesystem&quot; is<br>  considered to be NOT FOUND.  Reason given by package:<br><br>  No suitable build variant has been found.<br><br>  The following variants have been tried and rejected:<br><br>  * libboost_filesystem-vc142-mt-gd-x64-1_74.lib (vc142, detected vc141, set<br>  Boost_COMPILER to override)<br><br>  * libboost_filesystem-vc142-mt-x64-1_74.lib (vc142, detected vc141, set<br>  Boost_COMPILER to override)<br><br>Call Stack (most recent call first):<br>  D:/Environment/PCL 1.11.1/3rdParty/Boost/lib/cmake/Boost-1.74.0/BoostConfig.cmake:258 (boost_find_component)<br>  E:/Program Files/CMake/share/cmake-4.0/Modules/FindBoost.cmake:609 (find_package)<br>  CMakeLists.txt:27 (find_package)<br></code></pre></td></tr></table></figure>
+<p><strong>解决方案：</strong><br>使用低版本的boost库即可解决该问题</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">你当前的编译器是：<br>MSVC v141（来自 VS2017）<br>而 CMake 在 Boost 的 .lib 中找到了：<br><br>libboost_filesystem-vc142-xxx.lib（是 VS2019 编译出来的）<br>所以 CMake 报错说：<br><br>❌ 找到 Boost 的 cmake 包，但 .lib 是用 vc142 编译的，而你现在用的是 vc141，不匹配！<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="3-CMake-报错-“No-CUDA-toolset-found”"><a href="#3-CMake-报错-“No-CUDA-toolset-found”" class="headerlink" title="3. CMake 报错 “No CUDA toolset found”"></a><strong>3. CMake 报错 “No CUDA toolset found”</strong></h2><p><strong>问题描述：</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">No</span> CUDA toolset <span class="hljs-built_in">found</span>.<br></code></pre></td></tr></table></figure>
+
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>**检查 <strong>&#96;&#96;</strong> 环境变量是否设置正确，并确保其中包含 **&#96;&#96;<strong>。</strong></li>
+<li><strong>重新安装 CUDA 工具包，确保版本和 Visual Studio 兼容（如 VS2017 不支持搭配 CUDA 11.7）。</strong></li>
+<li><strong>CUDA重新安装时需要配置Visual Studio编译器</strong></li>
+</ul>
+<hr>
+<h2 id="4-编译时报错-“-error-No-Target-Architecture”"><a href="#4-编译时报错-“-error-No-Target-Architecture”" class="headerlink" title="4. 编译时报错 “#error: No Target Architecture”"></a>4. 编译时报错 “#error: No Target Architecture”</h2><p><strong>问题描述：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">error</span>:  <span class="hljs-string">&quot;No Target Architecture&quot;</span></span><br></code></pre></td></tr></table></figure>
+
+<p><strong>原因分析：</strong></p>
+<ul>
+<li>MSVC 编译器未设置 <code>_M_X64</code> 或其他 CPU 架构宏。</li>
+</ul>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>在 CMakeLists.txt 中添加：</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_definitions</span>(-D_M_X64 -DWIN32 -D_WINDOWS)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>或手动在项目属性 &gt; C&#x2F;C++ &gt; 预处理器 中添加 <code>_M_X64</code>。</li>
+</ul>
+<hr>
+<h2 id="5-重新配置-CMake-提示-“generator-platform-does-not-match”"><a href="#5-重新配置-CMake-提示-“generator-platform-does-not-match”" class="headerlink" title="5. 重新配置 CMake 提示 “generator platform does not match”"></a>5. 重新配置 CMake 提示 “generator platform does not match”</h2><p><strong>问题描述：</strong></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs subunit"><span class="hljs-keyword">Error: </span>generator platform: x64 does not match the platform used previously<br></code></pre></td></tr></table></figure>
+
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>删除 <code>build/</code> 目录下的 <code>CMakeCache.txt</code> 和 <code>CMakeFiles/</code>，然后重新配置。</li>
+</ul>
+<hr>
+<h2 id="6-Qt-类使用-Q-OBJECT-导致-LNK2001-等链接错误"><a href="#6-Qt-类使用-Q-OBJECT-导致-LNK2001-等链接错误" class="headerlink" title="6. Qt 类使用 Q_OBJECT 导致 LNK2001 等链接错误"></a>6. Qt 类使用 Q_OBJECT 导致 LNK2001 等链接错误</h2><p><strong>问题描述：</strong></p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">LNK2001:</span> 无法解析的外部符号 <span class="hljs-string">&quot;QMetaObject...&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>原因分析：</strong></p>
+<ul>
+<li>使用 Q_OBJECT 的类未自动生成 <code>moc_xxx.cpp</code> 文件。</li>
+</ul>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>确保 <code>.cpp</code> 文件中包含 <code>Q_OBJECT</code> 的类已加入 <code>CMakeLists.txt</code> 源文件列表中。(或者手动编译生成moc文件)</li>
+<li>添加以下设置：</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(CMAKE_AUTOMOC <span class="hljs-keyword">ON</span>)<br><span class="hljs-keyword">file</span>(GLOB QT_OBJECT_CLASSES src/*.cpp)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-Qt-图标资源无法显示"><a href="#7-Qt-图标资源无法显示" class="headerlink" title="7. Qt 图标资源无法显示"></a>7. Qt 图标资源无法显示</h2><p><strong>问题描述：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">QIcon</span>(<span class="hljs-string">&quot;:/icons/switch.png&quot;</span>) 无法显示图标<br></code></pre></td></tr></table></figure>
+
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>确保 <code>.qrc</code> 文件已正确加载到 CMake 中，如：</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">file</span>(GLOB QRC_FILES style/Mulit_view.qrc)<br>qt5_add_resources(RESOURCE_SRC <span class="hljs-variable">$&#123;QRC_FILES&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>确保资源路径正确，Qt 支持子路径引用，如 <code>:/icons/switch.png</code>。</li>
+<li>若资源目录为 <code>style/icons/</code>，则 <code>.qrc</code> 中路径应为：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">file</span>&gt;</span>icons/switch.png<span class="hljs-tag">&lt;/<span class="hljs-name">file</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-运行缺少-DLL-文件"><a href="#8-运行缺少-DLL-文件" class="headerlink" title="8. 运行缺少 DLL 文件"></a>8. 运行缺少 DLL 文件</h2><p><strong>解决方案：</strong></p>
+<ul>
+<li>将 Qt 所需运行库复制至可执行文件目录下（建议使用 windeployqt 工具）。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">windeployqt.exe MyQtProject.exe<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>也可手动将 Qt 和其他第三方库的 <code>dll</code> 文件复制至 <code>build/bin/Debug</code> 目录。</li>
+</ul>
+<hr>
+<h2 id="9-VS-CUDA-报-nvcc-编译失败，返回代码-2"><a href="#9-VS-CUDA-报-nvcc-编译失败，返回代码-2" class="headerlink" title="9. VS + CUDA 报 nvcc 编译失败，返回代码 2"></a><em>9</em>. VS + CUDA 报 nvcc 编译失败，返回代码 2</h2><p><strong>可能原因：</strong></p>
+<ul>
+<li>架构未设置</li>
+<li>宏未定义</li>
+<li>Visual Studio 工具集不一致</li>
+</ul>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>添加 <code>set(CMAKE_CUDA_ARCHITECTURES 75 86)</code> 到 CMakeLists.txt。</li>
+<li>显式添加 nvcc 编译宏：</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">foreach</span>(cuda_source_file <span class="hljs-variable">$&#123;CUDA_SOURCES&#125;</span>)<br>    <span class="hljs-keyword">set_source_files_properties</span>(<span class="hljs-variable">$&#123;cuda_source_file&#125;</span> PROPERTIES<br>        COMPILE_FLAGS <span class="hljs-string">&quot;-D_M_X64 -DWIN32 -D_WINDOWS&quot;</span>)<br><span class="hljs-keyword">endforeach</span>()<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-添加-Qt-支持的建议结构"><a href="#10-添加-Qt-支持的建议结构" class="headerlink" title="10. 添加 Qt 支持的建议结构"></a>10. 添加 Qt 支持的建议结构</h2><p><strong>推荐配置：</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(CMAKE_AUTOMOC <span class="hljs-keyword">ON</span>)<br><span class="hljs-keyword">set</span>(CMAKE_AUTOUIC <span class="hljs-keyword">ON</span>)<br><span class="hljs-keyword">set</span>(CMAKE_AUTORCC <span class="hljs-keyword">ON</span>)<br><span class="hljs-keyword">file</span>(GLOB UI_FILES ui/*.ui)<br><span class="hljs-keyword">file</span>(GLOB QRC_FILES style/*.qrc)<br>qt5_add_resources(RESOURCE_SRC <span class="hljs-variable">$&#123;QRC_FILES&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>注意事项：</strong></p>
+<ul>
+<li>UI 文件和资源文件需加入编译依赖</li>
+<li><code>Q_OBJECT</code> 类对应的 <code>.cpp</code> 需显式列出，不能只用 <code>GLOB</code> 拿 <code>.h</code></li>
+</ul>
+<hr>
+<h2 id="11-手动生成-MOC-文件"><a href="#11-手动生成-MOC-文件" class="headerlink" title="11. 手动生成 MOC 文件"></a>11. 手动生成 MOC 文件</h2><p><strong>命令行使用方法：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">moc -o moc_MyClass.cpp MyClass.h<br></code></pre></td></tr></table></figure>
+
+<p>然后将生成的 <code>moc_*.cpp</code> 文件加入 CMake：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(MOC_SRCS src/moc_DarkStyle.cpp ...)<br><span class="hljs-keyword">add_executable</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> <span class="hljs-variable">$&#123;ALL_CPP_FILES&#125;</span> <span class="hljs-variable">$&#123;MOC_SRCS&#125;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="12-缓存报错-Error-could-not-load-cache"><a href="#12-缓存报错-Error-could-not-load-cache" class="headerlink" title="12. 缓存报错 Error: could not load cache"></a>12. 缓存报错 Error: could not load cache</h2><p><strong>解决方案：</strong></p>
+<ul>
+<li>删除构建目录重新生成：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">rd /s /q build<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>cmake .. -G <span class="hljs-string">&quot;Visual Studio 16 2019&quot;</span> -A x64<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="13-json编译文件"><a href="#13-json编译文件" class="headerlink" title="13. json编译文件"></a>13. json编译文件</h2><p>✅ 使用方式（VS Code + CMake Tools）<br>按下 Ctrl+Shift+P，输入并选择：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">CMake: Select Configure Preset<br></code></pre></td></tr></table></figure>
+<p>选择 default<br>然后执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">CMake: Build with Preset<br></code></pre></td></tr></table></figure>
+<p>选择 default-build</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C-Toolchain/" class="category-chain-item">C++ Toolchain</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/note/" class="print-no-link">#note</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2025年4月07日学习概述</div>
+      <div>url:https://xiuyi-wei.github.io/2025/04/07/20250407-CMake/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xiuyi</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/25/20250325-hot100/" title="2025年3月25日hot100练习">
+                        <span class="hidden-mobile">2025年3月25日hot100练习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"kkCWie568T3Td8EHuu5ibLPG-gzGzoHsz","appKey":"Cj2bxcHsUs0jiyCNeRaLxJR5","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      京ICP证123456号
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>京公网安备12345678号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
